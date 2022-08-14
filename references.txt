@@ -1,0 +1,9 @@
+TUNELLING SERVICES:
+ - localtunnel:	https://theboroer.github.io/localtunnel-www/
+ - Ngrok:		https://ngrok.com/
+
+BORROWED HTML/CSS:
+ - Instagram:	https://github.com/codingmarket07/Instagram-Login-Page
+ - Facebook:	https://github.com/webxplained/Facebook-HTML-CSS
+ - Twitter:		https://github.com/tjaartvanderWalt/live-coding-twitter-login-clone
+ - Google:      https://ziontutorial.com/how-to-make-google-login-form-design-using-html-css/
