@@ -1,5 +1,5 @@
 
-![Logo](https://imgur.com/VmFdqwc)
+![Logo](https://i.imgur.com/VmFdqwc.jpg)
 
 
 # ~ phishSploit ~
