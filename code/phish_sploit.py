@@ -1,4 +1,5 @@
 import os
+import time
 import threading as thr
 from pyngrok import ngrok
 from pagepicker.picker import page_picker
@@ -61,6 +62,7 @@ push_page, host = push_page_options(port)
 # IN SEPERATE THREADS FOR SMOOTH FLOW AND AVOID FREEZING
 if push_page in PUBLIC_TUNELS:
     if push_page == 'localtunnel':
+        time.sleep(8)
         run_with_lt(app)
     timer = thr.Timer(LOAD_TIME, request_localhost, args=(host, port))
     timer.start()
