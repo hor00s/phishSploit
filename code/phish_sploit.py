@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import time
 import threading as thr
@@ -14,6 +15,7 @@ from actions.actions import (
     create_initial_files,
     request_localhost,
     push_page_options,
+    clear_terminal,
     connect_ngrok,
     status_bar,
     sign_in,
@@ -45,8 +47,8 @@ Each user is solely responsible and accountable for his own actions.
 """
 
 
-os.system('clear')
-port: str = '5000'
+clear_terminal()
+port = '5000'
 create_initial_files()
 kill_previous_connection()
 
@@ -87,6 +89,7 @@ def main():
 
 
 if __name__ == '__main__':
+    clear_terminal()
     print(success(f"Your are currently running at: {push_page} mode"))
     print(success(f"Access point: {host}:{port}"))
     app.run(host=host, port=port)
