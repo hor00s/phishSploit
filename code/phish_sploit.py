@@ -57,7 +57,7 @@ print(banner())
 app = Flask(__name__)
 
 page = page_picker()
-push_page, host = push_page_options(port)
+push_page, host = push_page_options()
 
 page_name = page.create()
 redirect_setter(page_name)

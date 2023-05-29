@@ -31,10 +31,7 @@ class PageFactory:
             Instagram(),
         ]
 
-    def __getitem__(self, i: int):
-        return self.current_pages[i]
-
-    def pick(self, i: int) -> IPage:
+    def __getitem__(self, i: int) -> IPage:
         return self.current_pages[i]
 
 
@@ -45,6 +42,6 @@ def page_picker() -> IPage:
         print(theme_color(f"[{idx}]:\t{page}\n"))
     selection = int(input("Select a page by number: "))
 
-    final_page = pages.pick(selection)
+    final_page = pages[selection]
     print(theme_color(f"You selected: {final_page._page.title()}\n"))
     return final_page

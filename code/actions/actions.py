@@ -200,25 +200,23 @@ def status_bar(load_time: int) -> None:
         time.sleep(1)
 
 @log_error
-def push_page_options(port) -> str:
-    push_page_question = input(f"""Choose one of the following services (Write the whole word):
-%s: """ %(' - '.join(PUBLIC_TUNELS + PVT_TUNNELS))).lower()
+def push_page_options() -> str:
+    services = {}
+    for i, p in enumerate(PUBLIC_TUNELS + PVT_TUNNELS):
+        services[i] = p
 
+    for i, p in enumerate(PUBLIC_TUNELS + PVT_TUNNELS):
+        print(f"[{i}]: {p}\n")
+
+    push_page_question = services[int(input("Select a service by number: "))]
     host = '127.0.0.1'
-    if push_page_question == 'private':
-        host = '127.0.0.1'
-    elif push_page_question == 'local':
-        host = get_IPv4()
-    elif push_page_question == 'ngrok':
-        host = '127.0.0.1'
-    elif push_page_question == 'localtunnel':
-        host = '127.0.0.1'
-    
-    if push_page_question in PUBLIC_TUNELS + PVT_TUNNELS:
-        return push_page_question, host
 
-    print(info(f"Invalid selection, running default tunnel: {PVT_TUNNELS[0]}"))
-    return PVT_TUNNELS[0], host
+    if push_page_question in ('private', 'localtunnel', 'ngrok'):
+        host = '127.0.0.1'
+    elif push_page_question in ('local',):
+        host = get_IPv4()
+    
+    return push_page_question, host
 
 
 def redirect_setter(page_name: str) -> str:
@@ -229,8 +227,8 @@ def redirect_setter(page_name: str) -> str:
         print(info("Invalid url. Default redirect will be set"))
         time.sleep(2)
         redirect_url = f'https://www.{page_name}.com/'
-        return redirect_url
     else:
         print(info(f"Url {redirect_url} has been set!"))
         time.sleep(2)
+    finally:
         return redirect_url
