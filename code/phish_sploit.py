@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
+import sys
 import time
 import threading as thr
 from pyngrok import ngrok
+from cli.cli import cli
 from pagepicker.picker import page_picker
 from actions.constants import (
     PUBLIC_TUNELS,
     LOAD_TIME,
     PUBLICURL,
     success,
+    config,
 )
 from actions.actions import (
     kill_previous_connection,
@@ -46,9 +49,12 @@ be held responsible for any misuse nor any illegal activities.
 Each user is solely responsible and accountable for his own actions.
 """
 
+if len(sys.argv) != 1:
+    cli()
+    exit()
 
 clear_terminal()
-port = '5000'
+port = config['port']
 create_initial_files()
 kill_previous_connection()
 

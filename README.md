@@ -45,24 +45,36 @@ after a couple of hours at most!
 
 ## Documentation
 
-**~ Make sure you've seen the DISCLAIMER.md**
+**~ Make sure you've seen the DISCLAIMER.md ~**
 
 phishSploit is an application that creates clone
 login pages from well known social media platforms.
 These pages have some ways of sharing easily either
 locally or publicly with the following options:
-- private: Opens at `127.0.0.1:5000` and stays only on the host machine
-- local: Opens at `<your-IPv4-addr>:5000` and can be shared to all the devices that are connected on the same netword
-- ngrok: Opens at a random link every time given from [ngrok's](https://ngrok.com/docs) tunneling service and can be accessed from anywhere arround the world
-- localtunnel: Opens at a random link every time given from [localtunnel's](https://theboroer.github.io/localtunnel-www/) tunneling service and can be accessed from anywhere arround the world
+- private: Opens at `127.0.0.1:<PORT>` and stays only on the host machine
+- local: Opens at `<your-IPv4-addr>:<PORT>` and can be shared to all the devices that are connected on the same netword
+- ngrok: Opens at a random link every time given from [ngrok](https://ngrok.com/docs)'s tunneling service and can be accessed from anywhere arround the world
+- localtunnel: Opens at a random link every time given from [localtunnel](https://theboroer.github.io/localtunnel-www/)'s tunneling service and can be accessed from anywhere arround the world
 
-Neither of these services provides anonimity
+The app will then prompt you to add a `redirect url`. This url is where a victim will be redirected after he inserts his credentials. If this field is left blank, the default of each page (Chosen page's homepage) will be set by default
+
+Your page clone can be shared publicly with [pinggy.io](https://pinggy.io/) too.
+```
+Start the app on private mode (Option [2])
+Open a new terminal
+$ ssh -p 443 -R0:127.0.0.1:<PORT> a.pinggy.io
+#              ^ That's a Zero (0)
+Share the link
+```
+
+Note that none of these services provides anonimity
 and/or confidentiality, so use wisely!
 
+The application also has a cli. Run `./phish_sploit.py -h` for more info.
 
 ## Installation
 
-Basic Installation
+- Basic Installation
 
 ```bash
   git clone https://github.com/hor00s/phishSploit
@@ -72,14 +84,15 @@ Basic Installation
   # That should be enought for most of the services to work
 ```
 
-Ngrok service does not work out of the box. To install:
+- Ngrok service does not work out of the box. To install:
 
 ```
   Create an account to ngrok: https://ngrok.com/
   Get your auth-token
   Download the app: https://ngrok.com/download
   Navigate to the same directory that the `ngrok.exe` is downloaded
-  Open terminal: ngrok config add-authtoken TOKEN
+  Open terminal
+  $ ngrok config add-authtoken <TOKEN>
 ```
 
 ## ~ Keep it fun, safe and legal!

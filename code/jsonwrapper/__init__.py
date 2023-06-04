@@ -1,0 +1,1 @@
+from .autosavedict import *  # noqa
